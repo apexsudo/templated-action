@@ -1,0 +1,56 @@
+name: 'templated-action'
+description: 'sync files across multiple repository with templating support'
+author: 'apexsudo'
+
+# Add your action's branding here. This will appear on the GitHub Marketplace.
+branding:
+  icon: 'refresh-cw'
+  color: 'black'
+
+# Define your inputs here.
+inputs:
+  gh_token:
+    required: true
+    description:
+      a github token that is able to clone your src repository and is able to
+      create a pull request in current repository
+  license:
+    required: false
+    description:
+      a license string that is obtained from `http://example.com` (optional for
+      public repositories)
+  config_file:
+    required: false
+    default: .github/templated-files-config.yaml
+    description:
+      config file location in current repository (defaults to
+      .github/templated-files-config.yaml)
+  branch_name:
+    required: false
+    default: automated/sync_files
+    description:
+      the name of the branch that should be created in GitHub while attempting
+      to create a Pull Request
+  commit_message:
+    required: false
+    default: 'chore: sync files from source'
+    description: git commit message for the changes to be committed
+  pr_title:
+    required: false
+    default: 'chore: sync files from source'
+    description: title for the pull request
+  left_delimiter:
+    required: false
+    default: '{{'
+    description: overrides left delimiter for template files
+  right_delimiter:
+    required: false
+    default: '}}'
+    description: overrides left delimiter for template files
+  base_branch:
+    required: false
+    description: base branch name for the pull requests
+
+runs:
+  using: node20
+  main: dist/index.js
